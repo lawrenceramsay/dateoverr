@@ -2,4 +2,5 @@
 
 export(ovr_period_compare)
 export(ovr_ytd_compare)
-import(lubridate)
+import(data.table)
+importFrom(data.table,":=")

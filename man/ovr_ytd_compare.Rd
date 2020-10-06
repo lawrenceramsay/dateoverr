@@ -2,20 +2,21 @@
 % Please edit documentation in R/ovr_ytd_compare.R
 \name{ovr_ytd_compare}
 \alias{ovr_ytd_compare}
-\title{Add together two numbers}
+\title{Calculates the year to date number against previous year to date}
 \usage{
 ovr_ytd_compare(
   dat,
   date_col_name,
   value_col_name,
+  period,
   output_col_name = "compare",
   group_cols = NULL,
-  skip_months = F,
+  skip_period = F,
   order_data = T,
-  month_diff = 1,
+  period_diff = 12,
   percentage = F,
-  start_month = 1,
-  end_month = lubridate::month(Sys.Date())
+  alt_year_col_name = NULL,
+  output_cumsum = F
 )
 }
 \arguments{
@@ -23,51 +24,33 @@ ovr_ytd_compare(
 
 \item{date_col_name}{The column name of the date column as a character string}
 
-\item{value_col_name}{The column of the values to be evaluated}
+\item{value_col_name}{The column of the values to be evaluated as a character string}
 
-\item{output_col_name}{The name of the column in the output data}
+\item{period}{Periodicity the data. Can be "month" or "year"}
 
-\item{group_cols}{Columns to group by when evaulating. Up to two are allowed}
+\item{output_col_name}{The name of the column in the output data as a character string}
 
-\item{skip_months}{Whether to skip months in the and go against the most recent month or stick rigidly to the previous month. If false value will be NA for preivous month. Only applicable when using group columns.}
+\item{group_cols}{Columns to group by when evaluating. Up to two are allowed}
 
-\item{month_diff}{difference of months to compare. use 1 for month over previous month. 12 for year over year}
+\item{skip_period}{Whether to skip periods in the and go against the most recent period or stick rigidly to the previous period. If false value will be NA for previous period. Only applicable when using group columns. Can produce strange results if true.}
 
-\item{percentage}{whether the month comparison comes out as a percentage or a absolute value. Defaults to absolute value}
+\item{order_data}{Whether the data should come out ordered or not. Can produce strange results if false.}
 
-\item{start_month}{starting month for the year to date comparison. Defaults to January of the year}
+\item{period_diff}{Difference of periods to compare. For example, using "month" period, use 1 for month over previous month. 12 for month over previous year}
 
-\item{end_month}{end month for comparison. Defaults to the current month}
+\item{percentage}{Whether the period comparison comes out as a percentage or a absolute value. Defaults to absolute value.}
+
+\item{alt_year_col_name}{If using a different year to the calendar year, then the name of the year column to use instead. As a character string.}
+
+\item{output_cumsum}{Output the cumulative sum column used for calculation. Used for tractability of calculation}
 }
 \value{
-returns data frame or data table depending on the input dat
+returns data frame or data table depending on the input data
 }
 \description{
-Add together two numbers
+Calculates the year to date number against previous year to date
 }
 \examples{
-#test with groups
-dt_grp_2 <- expand.grid(dte = seq(min(as.Date("2017-01-01")),
-                 max(as.Date("2020-05-01")), by = "months"),
-                 Group1 = c("A","B"), Group2 = c("C", "D"))
 
-dt_grp_2$value = round(runif(nrow(dt_grp_2), 0.1, 99.99),2)
-
-#with skipped months
-dt_grp_2_sub <- dt_grp_2[sample(1:nrow(dt_grp_2),
-nrow(dt_grp_2)/2, replace=FALSE),]
-
-dateoverr::ovr_month_compare(dt_grp_2, date_col_name = "dte",
-value_col_name = "value", group_cols = c("Group1", "Group2"))
-
-#year on year without skipping months
-dateoverr::ovr_month_compare(dt_grp_2, date_col_name = "dte",
-value_col_name = "value", group_cols = c("Group1", "Group2"),
-month_diff = 12, skip_months = T)
-
-#month on month percentage without skipping months
-dateoverr::ovr_month_compare(dt_grp_2, date_col_name = "dte",
-value_col_name = "value", group_cols = c("Group1", "Group2"),
-month_diff = 1, skip_months = T, percentage = T)
 
 }

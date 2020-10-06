@@ -24,17 +24,19 @@ ovr_period_compare(
 
 \item{value_col_name}{The column of the values to be evaluated}
 
-\item{period}{Period the data denoted by seq.Date. "day", "week", "month", "quarter" or "year"}
+\item{period}{Periodicity the data. Allowed periods denoted by seq.Date: "day", "week", "month", "quarter" or "year"}
 
 \item{output_col_name}{The name of the column in the output data}
 
 \item{group_cols}{Columns to group by when evaulating. Up to two are allowed}
 
-\item{percentage}{whether the month comparison comes out as a percentage or a absolute value. Defaults to absolute value}
+\item{skip_period}{Whether to skip periods in the and go against the most recent period or stick rigidly to the previous period. If false value will be NA for preivous period. Only applicable when using group columns.}
 
-\item{skip_months}{Whether to skip months in the and go against the most recent month or stick rigidly to the previous month. If false value will be NA for preivous month. Only applicable when using group columns.}
+\item{order_data}{Whether the data should come out ordered or not}
 
-\item{month_diff}{difference of months to compare. use 1 for month over previous month. 12 for year over year}
+\item{period_diff}{difference of periods to compare. use 1 for period over previous period. 12 for year over year}
+
+\item{percentage}{whether the period comparison comes out as a percentage or a absolute value. Defaults to absolute value}
 }
 \value{
 returns data frame or data table depending on the input dat
@@ -45,26 +47,26 @@ Add together two numbers
 \examples{
 #test with groups
 dt_grp_2 <- expand.grid(dte = seq(min(as.Date("2017-01-01")),
-                 max(as.Date("2020-05-01")), by = "months"),
+                 max(as.Date("2020-05-01")), by = "periods"),
                  Group1 = c("A","B"), Group2 = c("C", "D"))
 
 dt_grp_2$value = round(runif(nrow(dt_grp_2), 0.1, 99.99),2)
 
-#with skipped months
+#with skipped periods
 dt_grp_2_sub <- dt_grp_2[sample(1:nrow(dt_grp_2),
 nrow(dt_grp_2)/2, replace=FALSE),]
 
-dateoverr::ovr_month_compare(dt_grp_2, date_col_name = "dte",
+dateoverr::ovr_period_compare(dt_grp_2, date_col_name = "dte",
 value_col_name = "value", group_cols = c("Group1", "Group2"))
 
-#year on year without skipping months
-dateoverr::ovr_month_compare(dt_grp_2, date_col_name = "dte",
+#year on year without skipping periods
+dateoverr::ovr_period_compare(dt_grp_2, date_col_name = "dte",
 value_col_name = "value", group_cols = c("Group1", "Group2"),
-month_diff = 12, skip_months = T)
+period_diff = 12, skip_period = T)
 
-#month on month percentage without skipping months
-dateoverr::ovr_month_compare(dt_grp_2, date_col_name = "dte",
+#period on period percentage without skipping periods
+dateoverr::ovr_period_compare(dt_grp_2, date_col_name = "dte",
 value_col_name = "value", group_cols = c("Group1", "Group2"),
-month_diff = 1, skip_months = T, percentage = T)
+period_diff = 1, skip_period = T, percentage = T)
 
 }

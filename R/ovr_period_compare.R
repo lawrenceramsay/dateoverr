@@ -36,7 +36,8 @@
 #' value_col_name = "value", group_cols = c("Group1", "Group2"),
 #' period_diff = 1, skip_period = T, percentage = T)
 #'
-#' @import lubridate
+#' @import data.table
+#' @importFrom data.table :=
 #' @export ovr_period_compare
 
 ovr_period_compare <- function (dat, date_col_name, value_col_name, period,
@@ -81,7 +82,7 @@ ovr_period_compare <- function (dat, date_col_name, value_col_name, period,
   }
 
   #check the columns are in the correct format
-  if (typeof(dat[,..date_col_name][[1]]) == "character") {
+  if (typeof(dat[,date_col_name,with=F][[1]]) == "character") {
     stop("Date column must be a date type")
   }
 

@@ -16,8 +16,6 @@
 #' @examples
 #'
 #'
-#' @import lubridate
-#' @impott dplyr
 #' @export ovr_ytd_compare
 
 ovr_ytd_compare <- function (dat, date_col_name, value_col_name, period,
