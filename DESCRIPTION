@@ -1,0 +1,17 @@
+Package: dateoverr
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Lawrence",
+           family = "Ramsay",
+           role = c("aut", "cre"),
+           email = "lawrence.ramsay@argusmedia.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Calculates the changes for over a period in absolute or percentage terms. Usually it would be months but can also compare other time periods. 
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Depends: data.table, R (>= 4.0.2)
