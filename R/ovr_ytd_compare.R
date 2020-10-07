@@ -259,7 +259,7 @@ ovr_ytd_compare <- function (dat, date_col_name, value_col_name, period,
   if(!output_cumsum) dat_output[, ("output_cumsum.") := NULL]
 
   #TODO: commented out for testing
-  #dat_output[, c("output_zero.", "year.") := NULL]
+  dat_output[, c("output_zero.", "year.") := NULL]
 
   data.table::setnames(dat_output, old = "output.", new = output_col_name)
 
